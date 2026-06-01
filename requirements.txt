@@ -1,0 +1,5 @@
+gymnasium==1.2.2
+pygame==2.6.1
+matplotlib==3.10.7
+pytest==9.0.1
+stable-baselines3==2.7.1
