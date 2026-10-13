@@ -84,7 +84,7 @@ Parameters are identical to `AeroSimulationEnv` except there is no `step_size` o
 
 **Reward:**
 
-$$r = (1 - \alpha)\,(-|\theta_\text{target} - \theta|) + \alpha\,\left(-\frac{P}{P_\text{max}}\right)$$
+$$r = (1 - \alpha)(-|\theta_\text{target} - \theta|) + \alpha \left(-\frac{P}{P_\text{max}}\right)$$
 
 where $\alpha$ is `power_penalty_weight`, $\theta$ is the current pitch, and $P_\text{max} = 24 \times 3.9197$ W. The episode truncates (with a scaled penalty) if $|\theta| \geq \pi/2$.
 
