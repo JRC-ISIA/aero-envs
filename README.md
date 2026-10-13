@@ -1,12 +1,11 @@
 # aero-envs
 
-Gymnasium-compatible reinforcement learning environments for the **Quanser Aero 2** — a twin-rotor aerodynamics testbed. The package provides three environment backends that share a common interface:
+Gymnasium-compatible reinforcement learning environments for the **Quanser Aero 2** — a twin-rotor aerodynamics testbed. The package provides two environment backends that share a common interface:
 
 | Environment | Backend | Use case |
 |---|---|---|
 | `AeroSimulationEnv` | C shared library (`.dll` / `.so`) | Fast, offline RL training |
-| `AeroHilEnv` | Quanser HIL SDK (real hardware) | Hardware-in-the-loop testing |
-| `AeroRealEnv` | *(planned)* | Direct hardware deployment |
+| `AeroHilEnv` | Quanser HIL SDK | Quanser Interactive Labs **and** real hardware |
 
 ---
 
@@ -61,11 +60,11 @@ Simulates the Quanser Aero 2 pitch dynamics via a pre-compiled model (`.dll` on 
 
 ### `AeroHilEnv`
 
-Wraps the same base interface but talks to a real Quanser Aero 2 over the HIL SDK. It enforces real-time timing by busy-waiting until each `sample_time` period elapses.
+Wraps the same base interface but communicates with hardware via the Quanser HIL SDK. It works with both **Quanser Interactive Labs** (virtual hardware over TCP) and a **physical Quanser Aero 2**. Real-time timing is enforced by busy-waiting until each `sample_time` period elapses.
 
 **Gymnasium ID:** `AeroHilEnv-v0`
 
-Parameters are identical to `AeroSimulationEnv` except there is no `step_size` or `render_mode`. An additional `card_identifier` parameter specifies the HIL board connection string (defaults to `"0@tcpip://localhost:18950?..."`).
+Parameters are identical to `AeroSimulationEnv` except there is no `step_size` or `render_mode`. An additional `card_identifier` parameter specifies the connection string — the default (`"0@tcpip://localhost:18950?..."`) works out of the box with Interactive Labs.
 
 ---
 
@@ -253,9 +252,7 @@ aero-envs/
 │   ├── simulation/
 │   │   └── simulation_env.py   # AeroSimulationEnv
 │   ├── hil/
-│   │   └── hil_env.py          # AeroHilEnv (Quanser HIL SDK)
-│   ├── real/
-│   │   └── real_env.py         # AeroRealEnv (planned)
+│   │   └── hil_env.py          # AeroHilEnv (Interactive Labs + real hardware)
 │   ├── utils/
 │   │   ├── trajectories.py     # TrajectoryGenerator + presets
 │   │   └── evaluation.py       # run_episode / evaluate_agent helpers
